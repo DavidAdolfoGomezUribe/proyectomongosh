@@ -52,6 +52,7 @@ db.createCollection("usuarios",{
 db.createCollection("vehiculos",{
     validator:{
         $jsonSchema:{
+            bsonType:"object",
             required:[
                 "_id",
                 "categoria",
@@ -65,13 +66,13 @@ db.createCollection("vehiculos",{
                 },
                 categoria:{
                     bsonType:"string",
-                    enum:["carro,moto,cicla,camion"],
+                    enum:["carro","moto","cicla","camion"],
                     description:"Debe ser uno de los siguientes valores: carro, moto, cicla, camion"
                 },
                 placa:{
                     bsonType:["string","null"],
                     pattern:"^[a-zA-Z0-9]{6}$",
-                    description:"debe ser de la forma abc123"
+                    description:"debe ser de la forma abc123 o null para ciclas"
                 },
                 cliente:{
                     bsonType:["object","null"],
@@ -86,16 +87,22 @@ db.createCollection("vehiculos",{
 db.createCollection("zonas",{
     validator:{
         $jsonSchema:{
+            bsonType:"object",
             required:[ 
+                "_id",
                 "tipo_zona",
                 "cupos_vehiculos",
                 "precio_hora",
             ],
             properties:{
+                 _id:{
+                    bsonType:"objectId",
+                    description:"Identificador Unico"
+                },
                 tipo_zona:{
                     bsonType:"string",
-                    enum:["carros,motos,ciclas,camiones"],
-                    description:"Solo puede ser uno de los siguientes valores carros , motos, ciclas, camiones",
+                    enum:["carros","motos","ciclas","camiones","empleados"],
+                    description:"Solo puede ser uno de los siguientes valores carros , motos, ciclas, camiones, empleados",
                 },
                 cupos_vehiculos:{
                     bsonType:"array",
@@ -118,11 +125,96 @@ db.createCollection("zonas",{
 db.createCollection("sedes",{
     validator:{
         $jsonSchema:{
+            bsonType:"object",
             required:[
                 "nombre",
-                ""
-            ]
+                "empleados",
+                "zonas",
+                "direccion",
+            ],
+            properties:{
+                nombre:{
+                    bsonType:"string",
+                    maxLength:120,
+                    maxLength:3,
+                    description:"nombre de la sede",
+
+                },
+                empleados:{
+                    bsonType:"array",
+                    items:{
+                        bsonType:"object",
+                    }
+                },
+                zonas:{
+                    bsonType:"array",
+                    maxItems:5,
+                    items:{
+                        bsonType:"object",
+                    }
+
+                },
+                direccion:{
+                    bsonType:"string",
+                    maxLength:255,
+                    minLength:10,
+                    description:"Ubicacion de la sede"
+
+                }
+
+            }
         }
     }
 })
 
+db.createCollection("parqueos",{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:[
+                "_id",
+                "sede",
+                "zona",
+                "vehiculo",
+                "hora_entrada",
+                "hora_salida",
+                "total_pago",
+                "estado",
+            ],
+            properties:{
+                _id:{
+                    bsonType:"objectId",
+                    description:"Identificador Unico"
+                },
+                sede:{
+                    bsonType:"objectId",
+                    description:"referencia a la sede"
+                },
+                zona:{
+                    bsonType:"objectId",
+                    description:"referencia a la zona de la sede"
+                },
+                vehiculo:{
+                    bsonType:"object",
+                    description:"referencia al vehiculo que esta en la zona de la sede"
+
+                },
+                hora_entrada:{
+                    bsonType:"date",
+                    description:"fecha de entrada formato ISODate"
+                },
+                hora_salida:{
+                    bsonType:"date",
+                    description:"fecha de salida formato ISODate"
+                },
+                total_pago:{
+                    bsonType:"int",
+                    description:"Valor a pagar"
+                },
+                estado:{
+                    enum:["activo","inactivo"]
+                }
+            }
+        }
+    }
+})
