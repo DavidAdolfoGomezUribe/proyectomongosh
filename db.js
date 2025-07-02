@@ -1,0 +1,128 @@
+db.createCollection("usuarios",{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:[
+               "_id",
+               "categoria",
+               "nombre",
+               "cedula",
+               "email",
+               "telefono"
+            ],
+            properties:{
+                _id:{
+                    bsonType:"objectId",
+                    description:"Identificador Unico"
+                    
+                },
+                categoria:{
+                    bsonType:"string",
+                    enum:["administrador","empleado","cliente"],
+                    description:"Debe ser uno de los siguientes valores administrador,empleado,cliente "
+                },
+                nombre:{
+                    bsonType:"string",
+                    minLength:1,
+                    maxLength:120,
+                    description:"debe ingresar un nombre menor a 120 caracteres"
+                },
+                cedula:{
+                    bsonType:"string",
+                    pattern:"^[0-9]{10}$",
+                    description:"Debe ingresar los 10 digitos de la cedula 1234567890 "
+                },
+                email:{
+                    bsonType:"string",
+                    pattern:"^.+@.+$",
+                    description:"Debe incluir un correo valido"
+                },
+                telefono:{
+                    bsonType:"string",
+                    pattern:"^[0-9]{10}$",
+                    description:"Debe ingresar los 10 digitos del telefono 312 1231234 "
+
+
+                }
+            }
+        }
+    }
+})
+
+db.createCollection("vehiculos",{
+    validator:{
+        $jsonSchema:{
+            required:[
+                "_id",
+                "categoria",
+                "placa",
+                "cliente"
+            ],
+            properties:{
+                _id:{
+                    bsonType:"objectId",
+                    description:"Identificador Unico"
+                },
+                categoria:{
+                    bsonType:"string",
+                    enum:["carro,moto,cicla,camion"],
+                    description:"Debe ser uno de los siguientes valores: carro, moto, cicla, camion"
+                },
+                placa:{
+                    bsonType:["string","null"],
+                    pattern:"^[a-zA-Z0-9]{6}$",
+                    description:"debe ser de la forma abc123"
+                },
+                cliente:{
+                    bsonType:["object","null"],
+                    description:"Datos del cliente embebidos para clientes que pagan mensualidad o null para clientes ocacionales"
+                }
+            }
+        }
+    }
+})
+
+
+db.createCollection("zonas",{
+    validator:{
+        $jsonSchema:{
+            required:[ 
+                "tipo_zona",
+                "cupos_vehiculos",
+                "precio_hora",
+            ],
+            properties:{
+                tipo_zona:{
+                    bsonType:"string",
+                    enum:["carros,motos,ciclas,camiones"],
+                    description:"Solo puede ser uno de los siguientes valores carros , motos, ciclas, camiones",
+                },
+                cupos_vehiculos:{
+                    bsonType:"array",
+                    maxItems:20,
+                    description:"Maximo 20 vehiculos por zona",
+                    items:{
+                        bsonType:"object",
+                    }
+                },
+                precio_hora:{
+                    bsonType:"int",
+                    description:"Precio por hora"
+                }
+                
+            }
+        }
+    }
+})
+
+db.createCollection("sedes",{
+    validator:{
+        $jsonSchema:{
+            required:[
+                "nombre",
+                ""
+            ]
+        }
+    }
+})
+
