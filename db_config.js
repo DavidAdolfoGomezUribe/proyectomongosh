@@ -66,8 +66,8 @@ db.createCollection("vehiculos",{
                 },
                 categoria:{
                     bsonType:"string",
-                    enum:["carro","moto","cicla","camion"],
-                    description:"Debe ser uno de los siguientes valores: carro, moto, cicla, camion"
+                    enum:["carro","moto","cicla","camion","mula"],
+                    description:"Debe ser uno de los siguientes valores: carro, moto, cicla, camion, mula"
                 },
                 placa:{
                     bsonType:["string","null"],
@@ -122,6 +122,7 @@ db.createCollection("zonas",{
     }
 })
 
+
 db.createCollection("sedes",{
     validator:{
         $jsonSchema:{
@@ -166,6 +167,7 @@ db.createCollection("sedes",{
         }
     }
 })
+
 
 db.createCollection("parqueos",{
     validator:{
