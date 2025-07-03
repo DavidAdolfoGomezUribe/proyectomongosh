@@ -75,7 +75,7 @@ db.createCollection("vehiculos",{
                     description:"debe ser de la forma abc123 o null para ciclas"
                 },
                 cliente:{
-                    bsonType:["object","null"],
+                    bsonType:["objectId","null"],
                     description:"Datos del cliente embebidos para clientes que pagan mensualidad o null para clientes ocacionales"
                 }
             }
@@ -92,7 +92,7 @@ db.createCollection("zonas",{
                 "_id",
                 "tipo_zona",
                 "cupos_vehiculos",
-                "precio_hora",
+                "precio_hora"
             ],
             properties:{
                  _id:{
@@ -130,27 +130,27 @@ db.createCollection("sedes",{
                 "nombre",
                 "empleados",
                 "zonas",
-                "direccion",
+                "direccion"
             ],
             properties:{
                 nombre:{
                     bsonType:"string",
                     maxLength:120,
-                    maxLength:3,
+                    minLength:3,
                     description:"nombre de la sede",
 
                 },
                 empleados:{
                     bsonType:"array",
                     items:{
-                        bsonType:"object",
+                        bsonType:"object"
                     }
                 },
                 zonas:{
                     bsonType:"array",
                     maxItems:5,
                     items:{
-                        bsonType:"object",
+                        bsonType:"object"
                     }
 
                 },
@@ -179,7 +179,7 @@ db.createCollection("parqueos",{
                 "hora_entrada",
                 "hora_salida",
                 "total_pago",
-                "estado",
+                "estado"
             ],
             properties:{
                 _id:{
@@ -208,11 +208,14 @@ db.createCollection("parqueos",{
                     description:"fecha de salida formato ISODate"
                 },
                 total_pago:{
-                    bsonType:"int",
-                    description:"Valor a pagar"
+                    bsonType:"double",
+                    description:"Valor a pagar",
+                    minimum:0
                 },
                 estado:{
-                    enum:["activo","inactivo"]
+                    bsonType:"string",
+                    enum:["activo","finalizado"],
+                    description:"Estado del vehiculo, activo o finalizado"
                 }
             }
         }
