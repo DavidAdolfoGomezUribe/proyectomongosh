@@ -1,3 +1,5 @@
+//
+
 db.createCollection("usuarios",{
     validator:{
         $jsonSchema:{
