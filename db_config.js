@@ -3,7 +3,7 @@ db.createCollection("usuarios",{
         $jsonSchema:{
             bsonType:"object",
             required:[
-               "_id",
+               
                "categoria",
                "nombre",
                "cedula",
@@ -11,12 +11,7 @@ db.createCollection("usuarios",{
                "telefono"
             ],
             properties:{
-                _id:{
-                    bsonType:"objectId",
-                    description:"Identificador Unico"
-                    
-                },
-                categoria:{
+               categoria:{
                     bsonType:"string",
                     enum:["administrador","empleado","cliente"],
                     description:"Debe ser uno de los siguientes valores administrador,empleado,cliente "
@@ -54,16 +49,12 @@ db.createCollection("vehiculos",{
         $jsonSchema:{
             bsonType:"object",
             required:[
-                "_id",
+                
                 "categoria",
                 "placa",
                 "cliente"
             ],
             properties:{
-                _id:{
-                    bsonType:"objectId",
-                    description:"Identificador Unico"
-                },
                 categoria:{
                     bsonType:"string",
                     enum:["carro","moto","cicla","camion","mula"],
@@ -75,7 +66,7 @@ db.createCollection("vehiculos",{
                     description:"debe ser de la forma abc123 o null para ciclas"
                 },
                 cliente:{
-                    bsonType:["objectId","null"],
+                    bsonType:["int","null","string"],
                     description:"Datos del cliente embebidos para clientes que pagan mensualidad o null para clientes ocacionales"
                 }
             }
@@ -89,16 +80,11 @@ db.createCollection("zonas",{
         $jsonSchema:{
             bsonType:"object",
             required:[ 
-                "_id",
                 "tipo_zona",
                 "cupos_vehiculos",
                 "precio_hora"
             ],
             properties:{
-                 _id:{
-                    bsonType:"objectId",
-                    description:"Identificador Unico"
-                },
                 tipo_zona:{
                     bsonType:"string",
                     enum:["carros","motos","ciclas","camiones","empleados"],
@@ -144,7 +130,7 @@ db.createCollection("sedes",{
                 empleados:{
                     bsonType:"array",
                     items:{
-                        bsonType:"object"
+                        bsonType:["string","int"]
                     }
                 },
                 zonas:{
@@ -174,7 +160,6 @@ db.createCollection("parqueos",{
         $jsonSchema:{
             bsonType:"object",
             required:[
-                "_id",
                 "sede",
                 "zona",
                 "vehiculo",
@@ -184,16 +169,12 @@ db.createCollection("parqueos",{
                 "estado"
             ],
             properties:{
-                _id:{
-                    bsonType:"objectId",
-                    description:"Identificador Unico"
-                },
                 sede:{
-                    bsonType:"objectId",
+                    bsonType:["objectId","int","string"],
                     description:"referencia a la sede"
                 },
                 zona:{
-                    bsonType:"objectId",
+                    bsonType:["objectId","int","string"],
                     description:"referencia a la zona de la sede"
                 },
                 vehiculo:{
@@ -206,11 +187,11 @@ db.createCollection("parqueos",{
                     description:"fecha de entrada formato ISODate"
                 },
                 hora_salida:{
-                    bsonType:"date",
+                    bsonType:["date","null"],
                     description:"fecha de salida formato ISODate"
                 },
                 total_pago:{
-                    bsonType:"double",
+                    bsonType:["int","double"],
                     description:"Valor a pagar",
                     minimum:0
                 },
