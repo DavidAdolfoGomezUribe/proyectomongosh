@@ -8,6 +8,8 @@ use parqueadero
 
 ```javascript
 db.getCollectionNames().forEach(function(c) {db[c].drop();});
+db.system.users.deleteMany({ role: { $exists: true } })
+db.system.users.deleteMany({ user: { $exists: true } })
 ```
 
 ```javascript
