@@ -1,6 +1,6 @@
 # Proyecto campus_parking
 
-
+profe el readme lo temino de hacer en la madrugadam necesito mimir un poquito
 
 ```javascript
 use parqueadero
