@@ -60,7 +60,7 @@ db.createUser({
   user: "carlos.perez",
   pwd: "empleado123",
   roles: [
-    { role: "empleadoSedeRole", db: "parqueadero" }
+    { role: "empleadoSedeRole", db: "admin" }
   ]
 })
 
