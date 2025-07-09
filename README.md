@@ -61,3 +61,4 @@ rs.initiate({
 //depues ejecutar este comando para ver si todo funciona correctamente 
 rs.status()
 ```
+

@@ -132,16 +132,60 @@ db.createCollection("sedes",{
                 empleados:{
                     bsonType:"array",
                     items:{
-                        bsonType:["string","int"]
+                        bsonType:["string","int","objectId"]
                     }
                 },
                 zonas:{
                     bsonType:"array",
                     maxItems:5,
                     items:{
-                        bsonType:"object"
+                        bsonType:"object",
+                        required:[ 
+                            "tipo_zona",
+                            "cupos_vehiculos",
+                            "precio_hora"
+                        ],
+                        properties:{
+                            tipo_zona:{
+                                bsonType:"string",
+                                enum:["carros","motos","ciclas","camiones","empleados"],
+                                description:"Solo puede ser uno de los siguientes valores carros , motos, ciclas, camiones, empleados",
+                            },
+                            precio_hora:{
+                                bsonType:"int",
+                                description:"Precio por hora"
+                            },
+                            cupos_vehiculos:{
+                                bsonType:"array",
+                                maxItems:20,
+                                description:"Maximo 20 vehiculos por zona",
+                                items:{
+                                    bsonType:"object",
+                                    required:[
+                                        "categoria",
+                                        "placa",
+                                        "cliente"
+                                    ],
+                                    properties:{
+                                        categoria:{
+                                            bsonType:"string",
+                                            enum:["carro","moto","cicla","camion","mula"],
+                                            description:"Debe ser uno de los siguientes valores: carro, moto, cicla, camion, mula"
+                                        },
+                                        placa:{
+                                            bsonType:["string","null"],
+                                            pattern:"^[a-zA-Z0-9]{6}$",
+                                            description:"debe ser de la forma abc123 o null para ciclas"
+                                        },
+                                        cliente:{
+                                            bsonType:["int","null","string","objectId","object"],
+                                            description:"Datos del cliente embebidos para clientes que pagan mensualidad o null para clientes ocacionales"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-
                 },
                 direccion:{
                     bsonType:"string",
@@ -172,12 +216,12 @@ db.createCollection("parqueos",{
             ],
             properties:{
                 sede:{
-                    bsonType:["objectId","int","string"],
-                    description:"referencia a la sede"
+                    bsonType:"string",
+                    description:"Nombre de la sede"
                 },
                 zona:{
-                    bsonType:["objectId","int","string"],
-                    description:"referencia a la zona de la sede"
+                    bsonType:"string",
+                    description:"Nombre de la zona de la sede"
                 },
                 vehiculo:{
                     bsonType:"object",
