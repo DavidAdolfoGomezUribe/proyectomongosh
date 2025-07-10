@@ -421,9 +421,10 @@ db.parqueos.insertMany([
     zona: "carros",
     vehiculo: { _id: 3 },
     hora_entrada: ISODate("2025-06-26T11:33:19"),
-    hora_salida: null,
-    total_pago: 0.0,
-    estado: "activo"
+    hora_salida: ISODate("2025-06-26T12:33:19"),
+    total_pago: 2800,
+    estado: "finalizado"
+    
   },
   {
     _id: ObjectId("de4f8e1b6c4544a29612c7cc"),
@@ -431,9 +432,9 @@ db.parqueos.insertMany([
     zona: "carros",
     vehiculo: { _id: 8 },
     hora_entrada: ISODate("2025-06-05T17:21:44"),
-    hora_salida: null,
+    hora_salida: ISODate("2025-06-05T18:23:14"),
     total_pago: 0.0,
-    estado: "activo"
+    estado: "finalizado"
   },
   {
     _id: ObjectId("da09abe8d023446da8e2033e"),
@@ -647,3 +648,7 @@ db.parqueos.insertMany([
   }
  
 ]);
+
+
+
+
